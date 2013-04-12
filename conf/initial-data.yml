@@ -1,0 +1,5 @@
+users:
+    - !!models.User
+        email:      xavier@yahoo.com
+        name:       Xavier Quintuna
+        password:   secret	
