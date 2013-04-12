@@ -28,9 +28,32 @@ public class User extends Model{
 	@Constraints.Required
 	public String password;
 	
+	
+	
+	public User(String email, String name, String password) {
+		this.email = email;
+		this.name = name;
+		this.password = password;
+	}
+	
+	
 	// -- Query
 	
 	public static Model.Finder<String, User> find = new Model.Finder(String.class, User.class);
+	
+	
+	/*
+	 * create users
+	 */
+	
+	public static User create(String email, String name, String password){
+		User user = new User(email, name, password);
+		user.save();
+		return user;
+	}
+	
+	
+	
 	
 	/*
 	 * Retrieve all users

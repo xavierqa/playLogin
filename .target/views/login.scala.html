@@ -1,12 +1,5 @@
 @(form: Form[Application.Login])
 
-<html>
-    <head>
-        <title>Login</title>
-        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
-    </head>
-    <body>
-
         
         @helper.form(routes.Application.authenticate) {
 
@@ -39,6 +32,4 @@
             Try <em>xavier@@yahoo.com</em> with <em>secret</em> as password.
         </p>
 
-    </body>
-</html>
         
