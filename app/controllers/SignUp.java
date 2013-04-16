@@ -7,6 +7,8 @@ import play.mvc.*;
 import play.Logger;
 import static play.data.Form.*;
 import play.mvc.Controller;
+import views.html.*;
+
 
 public class SignUp extends Controller{
 
@@ -16,39 +18,44 @@ public class SignUp extends Controller{
 	final static Form<User> signupForm = form(User.class);
 	
 	public static Result blank(){
-		return ok(form.render(signupForm));
+		//return ok();
+		return ok(signup.render(signupForm));
 	}
 
 	public static Result submit(){
-		 Form<User> filledForm = signupForm.bindFromRequest();
-		 
-         LOG.info(filledForm.toString());
-         if (!"true".equals(filledForm.field("accept").value())){
-                 filledForm.reject("accept","You must accept the terms and conditions");
-         }
-
-         if(!filledForm.field("password").valueOr("").isEmpty()){
-                 if (!filledForm.field("password").valueOr("").equals(filledForm.field("repeatPassword").value())){
-                         filledForm.reject("repeatPassword","Password don't match");
-                 }
-         }
-         // add support for generation of username
-         if(!filledForm.hasErrors()){
-                 if(filledForm.field("username").value().equals("admin")){
-                         filledForm.reject("username", "This username is already taken");
-                 }
-         }
-
-         //return null;
-         if(filledForm.hasErrors()){
-                 return badRequest(form.render(filledForm));
-         } else {
-                 User created = filledForm.get();
-                 created.save();
-                 session("email", filledForm.get().email);
-                 return ok(routes.Home.index());
-         }
-
+		LOG.info("submit here");
+		Form<User> filledForm = signupForm.bindFromRequest();
+		LOG.info(filledForm.toString());
+		LOG.info("Username: "+ filledForm.field("username").value());
+		if( !"true".equals(filledForm.field("accept").value())){
+			filledForm.reject("accept", "You must accept");
+		}
+		
+		if(!filledForm.field("password").valueOr("").isEmpty()){
+			if(!filledForm.field("password").valueOr("").equals(filledForm.field("repeatPassword").value())){
+				filledForm.reject("repeatPassword", "Please re-enter password, it does not match");
+				LOG.info( " repeat password");
+			}
+		}
+		
+		if(!filledForm.hasErrors()){
+			if(filledForm.field("username").value().equals("admin")){
+				LOG.info("Wrong username");
+				filledForm.reject("username","This username has been already taken");
+				
+			}
+		}
+		LOG.info("creating user" + filledForm.hasErrors());
+		if(filledForm.hasErrors()){
+			LOG.info("bad request" + filledForm.globalError());
+			return badRequest(signup.render(filledForm));
+		}else{
+			User created = filledForm.get();
+			LOG.info("User:"+created.toString());
+			created.save();
+			return redirect(routes.Home.index());
+		}
+		
 	}
 	
 }

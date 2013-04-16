@@ -1,13 +1,10 @@
 @(form: Form[Application.Login])
 
-<html>
-    <head>
-        <title>Login</title>
-        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
-    </head>
-    <body>
-
+@title={
+	Sign Up <small><a href="@routes.SignUp.blank">Create a new account</a>
+}        
         
+@main(title, nav ="signup"){        
         @helper.form(routes.Application.authenticate) {
 
             <h1>Sign in</h1>
@@ -35,10 +32,10 @@
             </p>
 
         }
+        
+}        
   <p class="note">
             Try <em>xavier@@yahoo.com</em> with <em>secret</em> as password.
         </p>
 
-    </body>
-</html>
         

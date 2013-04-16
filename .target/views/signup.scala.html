@@ -1,10 +1,12 @@
 @(signupForm: Form[User])
-
 @import helper._
 @import helper.twitterBootstrap._
+@title={
+	<p> Sign up test</p>
+}
 
-@main(nav = "signup"){
-	@helper.form(action = routes.SignUp.submit){
+@main(title, nav = "signup"){
+		@helper.form(action = routes.SignUp.submit){
 		<fieldset>
 			<legend>Create a user</legend>
 			@inputText(
@@ -19,19 +21,18 @@
 				'_label	-> "Email",
 				'_help	-> "Enter a valid email address"
 				)
-			@inputPassport(
+			@inputPassword(
 				signupForm("password"),
 				'_label -> "Password",
 				'_help	-> "A password has to be 6 characters"
 				)
-			@inputPassport(
+			@inputPassword(
 				signupForm("repeatPassport"),
 				'_label -> "Repeat Password",
 				'_help -> "please repeat your password again",
 				'_error -> signupForm.error("password")
 				 )
 		</fieldset>
-	}
 	
 	 <fieldset>
 
@@ -46,9 +47,9 @@
 
                 <div class="actions">
             <input type="submit" class="btn primary" value="Sign Up">
-            <a href="@routes.Application.index" class="btn">Cancel</a>
+            <a href="@routes.Application.login" class="btn">Cancel</a>
         </div>
-	
-	
-
+	}
+		
+		
 }

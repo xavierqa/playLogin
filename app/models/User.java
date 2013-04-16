@@ -23,16 +23,16 @@ public class User extends Model{
 	public String email;
 	
 	@Constraints.Required
-	public String name;
+	public String username;
 	
 	@Constraints.Required
 	public String password;
 	
 	
 	
-	public User(String email, String name, String password) {
+	public User(String email, String username, String password) {
 		this.email = email;
-		this.name = name;
+		this.username = username;
 		this.password = password;
 	}
 	
@@ -74,6 +74,6 @@ public class User extends Model{
 	}
 	
 	public String toString(){
-		return "user:"+email+"name:"+name+"password:"+password;
+		return "user:"+email+"name:"+username+"password:"+password;
 	}
 }

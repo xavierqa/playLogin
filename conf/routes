@@ -14,7 +14,7 @@ GET		/logout					controllers.Application.logout()
 
 #SignUp
 GET		/signup					controllers.SignUp.blank()
-POST	/signup					controllers.SignUp.sumbit()
+POST	/signup					controllers.SignUp.submit()
 
 
 
