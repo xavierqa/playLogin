@@ -41,7 +41,7 @@ public class SignUp extends Controller {
 		if (!filledForm.hasErrors()) {
 			//if (
 			
-					if( User.findByUsername(filledForm.field("username").value()) == null || filledForm.field("username").value().equals("admin")) {
+					if( User.findByUsername(filledForm.field("username").value()) != null || filledForm.field("username").value().equals("admin")) {
 				LOG.info("Wrong username");
 				filledForm.reject("username",
 						"This username has been already taken");
@@ -55,14 +55,16 @@ public class SignUp extends Controller {
 				filledForm.reject("email", "User already exist");
 			}
 		}
-		LOG.info("creating user" + filledForm.hasErrors());
+		LOG.info("creating user: " + filledForm.hasErrors());
 		if (filledForm.hasErrors()) {
 			LOG.info("bad request" + filledForm.globalError());
 			return badRequest(signup.render(filledForm));
 		} else {
 			User created = filledForm.get();
 			LOG.info("User:" + created.toString());
-			session("email", created.getEmail());
+			User newuser = User.create(created.getEmail(), created.getUsername(), created.getPassword());
+			newuser.createUDID();
+			session("UUID", newuser.getUUID());
 			return redirect(routes.Home.index());
 
 		}

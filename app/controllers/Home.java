@@ -12,8 +12,10 @@ public class Home extends Controller{
 	public static Logger LOG = new Logger();
 	
 	public static Result index(){
-		LOG.info("this is home");
-		return ok(home.render(request().username()));
+		LOG.info("this is home:"+request().toString());
+		
+		UUIDGenerator uuid = UUIDGenerator.findByUDID(request().username());
+		return ok(home.render(uuid.getUser().getUsername()));
 	}
 	
 }

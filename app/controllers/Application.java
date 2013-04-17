@@ -1,11 +1,13 @@
 package controllers;
 
+import models.UUIDGenerator;
 import models.User;
 import play.*;
 
 import static play.data.Form.*;
 
 import play.data.Form;
+import play.libs.Crypto;
 import play.mvc.*;
 
 import views.html.*;
@@ -19,18 +21,27 @@ public class Application extends Controller {
     	return ok(index.render());
     }
 
+    public static Result list(){
+    	return ok("this is a test");
+    }
 	
 	public static class Login{
 		public String email;
 		public String password;
+		public String username;
+		public String uuid; 
 		
 		public String validate(){
-			if(User.authenticate(email, password) == null){
+			LOG.info("validating user");
+			User user = User.authenticate(email, password);
+			
+			if(user == null){
 				return "Invalid username or password";
 			}
+			LOG.info("validated User:"+user.toString());
 			return null;
 		}
-		
+			
 	}
 	
 	public static Result login(){
@@ -38,11 +49,18 @@ public class Application extends Controller {
 	}
 	
 	public static Result authenticate(){
+		LOG.info("authentication");
 		Form<Login> loginForm = form(Login.class).bindFromRequest();
 		if(loginForm.hasErrors()){
 			return badRequest(login.render(loginForm));
 		}else{
-			session("email", loginForm.get().email);
+			LOG.info("user:"+loginForm);
+			//User user = User.create(, name, password)
+			String uuid = UUIDGenerator.getUUID(loginForm.get().email, loginForm.get().password);
+			LOG.info("user uuid:" + uuid);
+			session("UUID", uuid);
+			LOG.info("redirecting to home");
+			//response().setCookie("rememberme", Crypto.sign(uuid));
 			return redirect(routes.Home.index());
 		}
 		

@@ -7,6 +7,7 @@ GET     /                      controllers.Application.login()
 
 GET		/home					controllers.Home.index()
 
+
 # Authentication
 GET		/login					controllers.Application.login()
 POST 	/login					controllers.Application.authenticate()
@@ -15,6 +16,10 @@ GET		/logout					controllers.Application.logout()
 #SignUp
 GET		/signup					controllers.SignUp.blank()
 POST	/signup					controllers.SignUp.submit()
+
+#Profile
+GET		/profiles				controllers.Profiles.blank()
+POST	/profiles				controllers.Profiles.submit()
 
 
 

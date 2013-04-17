@@ -3,11 +3,17 @@ package models;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.Constraint;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import play.Logger;
 import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.*;
+
+
 import com.avaje.ebean.*;
 
 
@@ -30,14 +36,18 @@ public class User extends Model{
 	@Constraints.Required
 	public String password;
 	
-	public UDID udid;
+	
+	public String uuid; 
+	
+	
+	public UUIDGenerator udid;
 	
 	
 	public User(String email, String username, String password) {
 		this.email = email;
 		this.username = username;
 		this.password = password;
-		this.udid = new UDID(this);
+		
 	}
 	
 	
@@ -93,6 +103,7 @@ public class User extends Model{
 	public static User create(String email, String name, String password){
 		User user = new User(email, name, password);
 		User exist = User.findByEmail(user.getEmail());
+		//user.createUDID();
 		if(exist==null){
 			user.save();
 		}else{
@@ -105,6 +116,15 @@ public class User extends Model{
 	/*
 	 * Retrieve all users
 	 */
+	
+	public String getUUID(){
+		return this.uuid;
+	}
+	
+	public void createUDID(){
+		this.udid = new UUIDGenerator(this);
+		this.uuid = this.udid.getUUID();
+	}
 	
 	public static List<User> findAll(){
 		return find.all();
@@ -127,36 +147,25 @@ public class User extends Model{
 	}
 	
 	public String toString(){
-		return "user:"+email+"name:"+username+"password:"+password;
+		return "email:"+email+" username:"+username+" password:"+password;
 	}
 	
 	public String toJson(){
-		return "{user:"+this.getUsername()+",username:"+this.username+",password"+this.password+"}";
+		return "{email:"+this.getEmail()+",username:"+this.getUsername()+",password:"+this.getPassword()+"}";
 	}
 	
-	/*@Table (name="UDID_lookup")
-	class UDID{
+	public static User getUserFromJson(String json){
 		
-		public UDIDData data = new UDIDData(new Model.Finder(String.class, UDID.class));
-
-		public UDID(User user) {
-			// TODO Auto-generated constructor stub
-			this.data.user = user.toJson();
-			this.data.UDID = getUDID(user);
-			createUDID();
+		User user = null;
+		try {
+			JSONObject jsonuser = new JSONObject(json);
+			user = new User(jsonuser.getString("email"), jsonuser.getString("username"), jsonuser.getString("password"));
+		} catch (JSONException e) {
+			LOG.error("error deserializing json user",e);
 		}
-		
-		private String getUDID(User user){
-			return String.valueOf(user.toJson().hashCode());
-		}
-		private void createUDID(){
-			save();
-		}
-		
-		public UDID findByUDID(String UDID){
-			return data.findudid.where().eq("UDID", UDID).findUnique();
-		}
-		
-	}*/
+		return user;
+	}
+	
+	
 	
 }
