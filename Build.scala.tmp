@@ -1,0 +1,19 @@
+import sbt._
+import Keys._
+import PlayProject._
+
+object ApplicationBuild extends Build {
+
+  val appName = "MyLogin"
+  val appVersion = "1.0"
+
+  val appDependencies = Seq(
+    // Add your project dependencies here,
+    "org.json" % "json" % "20090211")
+
+  val main = PlayProject(appName, appVersion, appDependencies).settings(defaultScalaSettings: _*).settings(
+
+    resolvers += "org.json repository" at "http://mvnrepository.com/artifact/org.json/json/20090211"
+    )
+    
+}
