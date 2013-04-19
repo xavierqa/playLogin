@@ -20,6 +20,8 @@ POST	/signup					controllers.SignUp.submit()
 #Profile
 GET		/profiles				controllers.Profiles.blank()
 POST	/profiles				controllers.Profiles.submit()
+GET		/profiles/edit			controllers.Profiles.edit()
+GET		/profiles/delete		controllers.Profiles.delete()
 
 
 

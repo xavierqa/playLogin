@@ -1,1 +1,40 @@
-@(profileForm: Form[Profile])
+@(profileForm: Form[Profile],username: String)
+
+@title = {
+	<small>Title</small>
+}
+
+@main(title){
+	<div class="navbar">
+	<div class="navbar-inner">
+		<div class="container">
+			<ul class="nav">
+				<li>
+				<a class="brand" href="#">@username</a>
+				</li>			
+			</ul>	
+			<ul class="nav pull-right">
+			<div class="btn-group">
+				<a class="btn btn-primary" href="#">Profile</a>
+				<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"> <span class="caret"></span> </a>
+				<!--	<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Profile
+
+				</a> -->
+				<ul class="dropdown-menu">
+					<li>
+						<a tabindex="-1" href="@routes.Profiles.blank">Create</a>
+					</li>
+					<li>
+						<a tabindex="-1" href="@routes.Profiles.edit">Edit</a>
+					</li>
+					<li>
+						<a tabindex="-1" href="@routes.Profiles.delete">Delete</a>
+					</li>
+				</ul>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+}

@@ -45,14 +45,14 @@ public class Application extends Controller {
 	}
 	
 	public static Result login(){
-		return ok(login.render(form(Login.class)));
+		return ok(login.render(form(Login.class), "logout"));
 	}
 	
 	public static Result authenticate(){
 		LOG.info("authentication");
 		Form<Login> loginForm = form(Login.class).bindFromRequest();
 		if(loginForm.hasErrors()){
-			return badRequest(login.render(loginForm));
+			return badRequest(login.render(loginForm,"logout"));
 		}else{
 			LOG.info("user:"+loginForm);
 			//User user = User.create(, name, password)
