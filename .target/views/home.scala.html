@@ -1,13 +1,114 @@
 @(username: String)
 
-@main(Html("home application")){
+@import helper._
+@import helper.twitterBootstrap._
 
-<h1> Wellcome @username </h1>
+@title = {
 
+<div class="row">
+	<small>welcome back @username</small>
+	<div class="navbar navbar-static-top">
 
-<p> 
-	this is a login test
-</p>
+		<a class="brand" href="#">Home</a>
+		<a class="brand" href="profile.html">Profile</a>
 
+		<!-- Everything you want hidden at 940px or less, place within here -->
+
+	</div>
+</div>
 
 }
+
+@main(title){
+
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="container">
+			<ul class="nav">
+				<li>
+				<a class="brand" href="#">@username</a>
+				</li>			
+			</ul>	
+			<ul class="nav pull-right">
+			<div class="btn-group">
+				<a class="btn btn-primary" href="#">Profile</a>
+				<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"> <span class="caret"></span> </a>
+				<!--	<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Profile
+
+				</a> -->
+				<ul class="dropdown-menu">
+					<li>
+						<a tabindex="-1" href="@routes.Profiles.blank">Create</a>
+					</li>
+					<li>
+						<a tabindex="-1" href="@routes.Profiles.edit">Edit</a>
+					</li>
+					<li>
+						<a tabindex="-1" href="@routes.Profiles.delete">Delete</a>
+					</li>
+				</ul>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!--
+<div class="navbar navbar-static-top">
+<div class="navbar-inner">
+
+<ul class="nav">
+<li class="brand" href="#">Home</li>
+<li class="divider-vertical"></li>
+<li class="brand"> <a class="btn" href="#">Profile</a></li>
+<li class="divider-vertical"></li>
+<form class="navbar-form pull-right">
+<input type="text" class="search-query" placeholder="Search">
+
+</form>
+</ul>
+</div>
+</div>
+-->
+
+<!--
+<div class="row-fluid">
+
+<input type="submit" class="btn primary" value="Create a profile">
+<a href="@routes.Home.index" class="btn">Cancel</a>
+
+</div>
+-->
+
+}
+<!--
+@informationGroup(field: Field, className: String="profile") = {
+
+<div class="twipsies well @className">
+<a class="removeProfile btn danger pull-right>Remove this profile</a>
+
+@inputText(
+field("label"),
+'_label -> "Label"
+)
+
+@inputText(
+field("interest"),
+'_label -> "Interest"
+)
+
+</div>
+
+}
+
+<script type="text/javascript" charset="utf-8">
+$('.addProfile').on('click', function(e){
+var template = $('.profile_template')
+template.before('<div class="twipsies well profile">' + template.html() + '</div>')
+renumber()
+})
+
+</script>
+
+-->
