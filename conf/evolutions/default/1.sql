@@ -17,6 +17,26 @@ create table uuid(
 	
 );
 
+create table profiles(
+	id  					varchar(255),
+	profiles_json			varchar(255),
+	constraint pk_profiles primary key(id),
+	foreign key (uuid_uuid) references project (id) on delete cascade on update restrict		
+);
+
+create table date(
+	id						varchar(255),
+	birthday				date,
+	birthday_json			varchar(255),
+	constraint pk_date primary key(id),
+	foreign key (uuid_uuid) references project (id) on delete cascade on update restrict
+
+);
+
+
 # --- !Downs
  
 drop table if exists account;
+drop table if exists uuid;
+drop table if exists profiles;
+drop table if exists date;

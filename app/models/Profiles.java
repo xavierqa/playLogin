@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.*;
+import javax.validation.Constraint;
 
 import play.data.format.Formats;
 import play.data.validation.Constraints;
@@ -20,14 +21,15 @@ public class Profiles extends Model{
 	@Id
 	@Constraints.Required
 	@Formats.NonEmpty
-	private String uuid;
+	private String id;
 	
-	@Id
 	@Constraints.Required
-	@Formats.NonEmpty
-	private String profilesuuid;
-	
+	private String profilesJson;
 	 
+	private Birthday birthday;
+	
+	private Location originalLocation;
+	
 	Map<Integer,Profile> profiles = null;
 	// Query
 	
@@ -38,6 +40,7 @@ public class Profiles extends Model{
 	
 	public Profiles(String uuid) {
 			Profiles profiles = findProfiles(uuid);
+			this.id = uuid;
 			if( profiles == null){
 			this.profiles = new HashMap<Integer,Profile>();
 			this.index = 0;
@@ -75,21 +78,13 @@ public class Profiles extends Model{
 	}
 	
 	public static Profiles findProfiles(String uuid){
-		Profiles profiles = find.where().eq("uuid",uuid).findUnique();
+		Profiles profiles = find.where().eq("id",uuid).findUnique();
 		return profiles;
 	}
 	
 	
 	
-	/*
-	 * Create a profile
-	 * 
-	 */
 	
-	public static Profile createProfile(String uuid, Integer index){
-		Profile profile = new Profile(uuid, index);
-		return profile;
-	}
 	
 	
 	

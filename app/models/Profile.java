@@ -18,6 +18,13 @@ public class Profile {
 	
 	private String gender;
 	
+	private Location location;
+	
+	private Category category;
+	
+	private Communication communication;
+	
+	
 	
 	
 	public Profile(String uuid, Integer profile_number) {
@@ -66,4 +73,16 @@ public class Profile {
 	public String getGender(){
 		return this.gender;
 	}
+	
+	/*
+	 * Create a profile
+	 * 
+	 */
+	
+	public static Profile createProfile(String uuid, Integer index){
+		Profile profile = new Profile(uuid, index);
+		return profile;
+	}
+	
+	
 }

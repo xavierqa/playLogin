@@ -1,5 +1,6 @@
 package models;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,6 @@ public class Birthday {
 	
 	private Date birthday;
 
-	
 	
 	public String getMonth() {
 		return month;
@@ -50,6 +50,7 @@ public class Birthday {
 	}
 	
 	public static List<String> getAllYear(){
+		
 		return null;
 	}
 	
